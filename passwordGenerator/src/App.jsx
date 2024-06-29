@@ -51,8 +51,8 @@ function App() {
         <div className="flex text-sm gap-x-2">
           <div className="flex items-center gap-x-1">
             <input type="range" 
-             min={8}
-             max={32}
+             min={0}
+             max={320}
              value={length}
              className='cursor-pointer'
              onChange={(e)=>{setLength(e.target.value)}}/>
