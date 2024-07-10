@@ -1,45 +1,40 @@
-// src/App.jsx
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './NavBar';
-import Card from './Card';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
 
-  const cards = [
-    { title: 'Card 1', description: 'This is the first card.' },
-    { title: 'Card 2', description: 'This is the second card.' },
-    { title: 'Card 3', description: 'This is the third card.' },
-    { title: 'Card 4', description: 'This is the fourth card.' },
-    { title: 'Card 5', description: 'This is the fifth card.' },
-    { title: 'Card 6', description: 'This is the sixth card.' },
-    { title: 'Card 7', description: 'This is the seventh card.' },
-  ];
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
-    <>
-      <NavBar />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-        <h1 className="text-5xl font-bold text-green-600 animate-bounce">
-          Welcome to My Website!
-        </h1>
-        <p className="mt-4 text-lg text-gray-700">
-          This is the Welcome Page.
-        </p>
-        <button
-          className="mt-8 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105"
-          onClick={() => setCount(count + 1)}
-        >
-          Click Me! {count}
-        </button>
-      </div>
-      <div className="flex flex-wrap justify-center mt-8">
-        {cards.map((card, index) => (
-          <Card key={index} title={card.title} description={card.description} />
-        ))}
-      </div>
-    </>
+    <div className={darkMode ? "dark" : ""}>
+      <Router>
+        <NavBar />
+        <div className={`flex flex-col items-center justify-center min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+          
+          <button
+            className="mt-4 px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105"
+            onClick={toggleDarkMode}
+          >
+            Toggle Dark Mode
+          </button>
+        </div>
+      </Router>
+    </div>
   );
 }
 
